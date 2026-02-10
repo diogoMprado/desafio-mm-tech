@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {cadastrarFuncionario, atualizarFuncionario} from "../services/api";
+import Toast from './Toast';
 
 const FuncionarioForm = ({funcionario, onSave}) => {
     const [formData, setFormData] = useState({nome: '', email: '', telefone: ''});
     const [errors, setErrors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [toast, setToast] = useState(null);
 
     const isEditing = !!funcionario;
 
@@ -29,14 +32,25 @@ const FuncionarioForm = ({funcionario, onSave}) => {
         e.preventDefault();
 
         setErrors([]);
+        const errosValidacao = validarCampos();
+        if (errosValidacao.length > 0) {
+            setErrors(errosValidacao);
+            return;
+        }
+        setIsLoading(true);
+
+        const dadosEnvio = {
+            ...formData,
+            telefone: formData.telefone.replace(/\D/g, '')
+        };
 
         const promise = isEditing
-            ? atualizarFuncionario(funcionario._id, formData)
-            : cadastrarFuncionario(formData);
+            ? atualizarFuncionario(funcionario._id, dadosEnvio)
+            : cadastrarFuncionario(dadosEnvio);
 
         promise
             .then(() => {
-                alert(`Funcionario ${isEditing ? 'atualizado' : 'cadastrado'} com sucesso!`);
+                setToast(`Funcionario ${isEditing ? 'atualizado' : 'cadastrado'} com sucesso!`);
                 onSave();
             })
             .catch((error) => {
@@ -45,16 +59,39 @@ const FuncionarioForm = ({funcionario, onSave}) => {
                 if (errorData) {
                     setErrors(errorData);
                 } else {
-                    alert('Ocorreu um erro ao salvar');
+                    setToast('Ocorreu um erro ao salvar');
                 }
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
+    }
+    const validarCampos = () => {
+        const novosErros = [];
+
+        if (!formData.nome || formData.nome.trim().length < 2) {
+            novosErros.push('Nome é obrigatório (mínimo 2 caracteres)');
         }
 
-    return(
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email || !emailRegex.test(formData.email)) {
+            novosErros.push('Email inválido');
+        }
+
+        const telefoneNumerico = formData.telefone.replace(/\D/g, '');
+        if (telefoneNumerico.length < 8) {
+            novosErros.push('Telefone inválido (mínimo 8 dígitos)');
+        }
+
+        return novosErros;
+    };
+
+    return (
         <form onSubmit={handleSubmit}>
+            <Toast message={toast} onClose={() => setToast(null)} />
             <h2>{isEditing ? 'Editar Funcionário' : 'Novo Funcionário'}</h2>
             {errors.length > 0 && (
-                <div style={{ color: 'red', marginBottom: '10px' }}>
+                <div style={{color: 'red', marginBottom: '10px'}}>
                     <strong>Por favor, corrija os seguintes erros:</strong>
                     <ul>
                         {errors.map((error, index) =>
@@ -93,7 +130,8 @@ const FuncionarioForm = ({funcionario, onSave}) => {
                     required
                 />
             </div>
-            <button type="submit">{isEditing ? 'Atualizar' : 'Salvar'}</button>
+            <button type="submit" disabled={isLoading}>
+                {isLoading ? 'Salvando...' : (isEditing ? 'Atualizar' : 'Salvar')} </button>
             {isEditing && <button type="button" onClick={() => onSave()}>Cancelar</button>}
         </form>
     );
