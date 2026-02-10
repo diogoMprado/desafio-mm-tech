@@ -31,7 +31,9 @@ npm install
 Frontend:
 cd frontend
 npm install
-Passo 2: Executar o Projeto
+
+### Passo 2: Executar o Projeto
+
 Terminal 1 - Iniciar Backend:
 cd server
 node server.js
@@ -40,13 +42,17 @@ Terminal 2 - Iniciar Frontend:
 cd frontend
 npm run dev
 O frontend estará disponível em: http://localhost:5173 (ou outra porta indicada pelo Vite)
-📋 Funcionalidades
+
+### 📋 Funcionalidades
+
 CRUD Completo
 ✅ Create - Cadastrar novo funcionário
 ✅ Read - Listar todos os funcionários
 ✅ Update - Editar dados de um funcionário
 ✅ Delete - Excluir funcionário
-Validações Implementadas
+
+### Validações Implementadas
+
 Nome: mínimo 2 caracteres
 Email: formato válido (regex)
 Telefone: mínimo 8 dígitos numéricos
@@ -56,7 +62,9 @@ Feedback visual durante operações (loading)
 Mensagens de erro claras
 Confirmação antes de excluir
 Estado vazio quando não há cadastros
-🎯 Endpoints da API
+
+### 🎯 Endpoints da API
+
 Método
 Endpoint
 Descrição
@@ -75,7 +83,9 @@ Atualizar funcionário
 DELETE
 /funcionarios/:id
 Excluir funcionário
-🧪 Testando a Aplicação
+
+### 🧪 Testando a Aplicação
+
 Acesse o frontend no navegador
 Preencha o formulário com:
 Nome: João Silva
@@ -85,7 +95,9 @@ Clique em "Salvar"
 Verifique o funcionário na lista
 Teste editar clicando em "Editar"
 Teste excluir clicando em "Excluir"
-💡 Decisões Técnicas
+
+### 💡 Decisões Técnicas
+
 Por que NeDB?
 Requisito do desafio
 Zero configuração (não precisa instalar banco de dados separado)
@@ -105,20 +117,16 @@ Estrutura de Componentes
 Separação de responsabilidades: Formulário e Lista são independentes
 Props drilling controlado: Estado gerenciado no App.jsx
 Reusabilidade: Componentes podem ser facilmente reutilizados
-🔒 Segurança
+
+### 🔒 Segurança
+
 Validações no backend (nunca confie apenas no frontend)
 CORS configurado para aceitar requisições do frontend
 Sanitização de entradas (trim em strings)
 Tratamento de erros com códigos HTTP apropriados
-🚀 Melhorias Futuras
- Autenticação de usuários
- Paginação na listagem
- Busca e filtros
- Exportar dados para CSV/Excel
- Testes automatizados (Jest, React Testing Library)
- Deploy em produção (Vercel + Render)
- Migração para banco de dados robusto (PostgreSQL/MongoDB)
-👨‍💻 Autor
+
+###
+
 Desenvolvido como parte do processo seletivo MM Tech.
  
 Observação: Este projeto foi desenvolvido com foco em demonstrar habilidades em desenvolvimento fullstack, boas práticas de código e atenção à experiência do usuário.
