@@ -100,35 +100,47 @@ const FuncionarioForm = ({funcionario, onSave}) => {
                     </ul>
                 </div>
             )}
-            <div>
-                <label>Nome:</label>
-                <input
-                    type="text"
-                    name="nome"
-                    value={formData.nome}
-                    onChange={handleChange}
-                    required
-                />
+            <div className="input-group">
+                <label>Nome</label>
+                <div className="input-with-icon">
+                    <span className="input-icon">👤</span>
+                    <input
+                        type="text"
+                        name="nome"
+                        placeholder="Nome funcionário"
+                        value={formData.nome}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
             </div>
-            <div>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+            <div className="input-group">
+                <label>E-mail</label>
+                <div className="input-with-icon">
+                    <span className="input-icon">📧</span>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="nomefuncionario@exemplo.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
             </div>
-            <div>
-                <label>Telefone:</label>
-                <input
-                    type="tel"
-                    name="telefone"
-                    value={formData.telefone}
-                    onChange={handleChange}
-                    required
-                />
+            <div className="input-group">
+                <label>Telefone</label>
+                <div className="input-with-icon">
+                    <span className="input-icon">📞</span>
+                    <input
+                        type="tel"
+                        name="telefone"
+                        placeholder="(xx) xxxxx-xxxx"
+                        value={formData.telefone}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
             </div>
             <button type="submit" disabled={isLoading}>
                 {isLoading ? 'Salvando...' : (isEditing ? 'Atualizar' : 'Salvar')} </button>

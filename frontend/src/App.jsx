@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FuncionarioList from './components/FuncionarioList';
 import FuncionarioForm from './components/FuncionarioForm';
 import './App.css';
@@ -18,7 +18,14 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Gestão de Funcionários - MM Tech</h1>
+            <div className="header">
+                <div className="header-content">
+                    <img src="/mm-logo.svg" alt="MM Logo" className="logo" />
+                    <div className="header-text">
+                        <h1>Gestão de Funcionários</h1>
+                    </div>
+                </div>
+            </div>
             <div className="container">
                 <div className="form-container">
                     <FuncionarioForm
@@ -34,7 +41,8 @@ function App() {
                 </div>
             </div>
         </div>
-    );
+    )
+        ;
 }
 
 export default App;
