@@ -15,15 +15,18 @@ const Toast = ({ message, onClose, duration = 3000 }) => {
             position: 'fixed',
             top: '20px',
             right: '20px',
-            background: '#333',
-            color: '#fff',
+            background: '#d57a7a',
+            color: '#ffffff',
+            border: '1px solid #d57a7a',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            textAlign: 'center',
             padding: '12px 24px',
             borderRadius: '4px',
             zIndex: 1000
         }}>
             {message}
-            <button onClick={onClose} style={{ marginLeft: '10px', cursor: 'pointer' }}>×</button>
-
+            <button onClick={onClose} style={{ marginLeft: '10px', cursor: 'pointer', color: '#fff' }} >×</button>
         </div>
     );
 };
