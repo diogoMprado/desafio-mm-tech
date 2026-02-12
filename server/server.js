@@ -14,14 +14,16 @@ function validarFuncionario(nome, email, telefone) {
         erros.push('Nome é obrigatório (mínimo 2 caracteres)');
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Email deve ter formato exemplo@exemplo.com ou exemplo@exemplo.com.br
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|com\.br)$/;
     if (!email || !emailRegex.test(email)) {
-        erros.push('Email inválido');
+        erros.push('Email inválido. Use o formato: exemplo@exemplo.com ou exemplo@exemplo.com.br');
     }
 
-    const telefoneRegex = /^\d{8,}$/;
+    // Telefone deve ter DDD (2 dígitos) + 9 dígitos = 11 dígitos
+    const telefoneRegex = /^\d{11}$/;
     if (!telefone || !telefoneRegex.test(telefone)) {
-        erros.push('Telefone inválido (mínimo 8 dígitos numéricos)');
+        erros.push('Telefone inválido. Deve conter 11 dígitos (DDD + 9 dígitos)');
     }
 
     return {valido: erros.length === 0, erros};
@@ -42,8 +44,8 @@ app.post('/funcionarios', (req, res) => {
         return res.status(400).json({erros: validacao.erros});
     }
 
-    // Verificar se já existe funcionário com o mesmo email ou telefone
-    db.findOne({$or: [{email: email}, {telefone: telefone}]}, (err, existingDoc) => {
+    // Verificar se já existe funcionário com o mesmo nome, email ou telefone
+    db.findOne({$or: [{nome: nome}, {email: email}, {telefone: telefone}]}, (err, existingDoc) => {
         if (err) {
             console.error('ERRO ao verificar duplicação:', err);
             return res.status(500).json({error: 'Erro ao verificar funcionário', detalhes: err.message});
@@ -51,6 +53,9 @@ app.post('/funcionarios', (req, res) => {
 
         if (existingDoc) {
             const erros = [];
+            if (existingDoc.nome === nome) {
+                erros.push('Já existe um funcionário cadastrado com este nome');
+            }
             if (existingDoc.email === email) {
                 erros.push('Já existe um funcionário cadastrado com este email');
             }
@@ -107,11 +112,11 @@ app.put('/funcionarios/:id', (req, res) => {
         return res.status(400).json({erros: validacao.erros});
     }
 
-    // Verificar se já existe outro funcionário com o mesmo email ou telefone
+    // Verificar se já existe outro funcionário com o mesmo nome, email ou telefone
     db.findOne({
         $and: [
             {_id: {$ne: id}}, // Diferente do ID atual
-            {$or: [{email: email}, {telefone: telefone}]}
+            {$or: [{nome: nome}, {email: email}, {telefone: telefone}]}
         ]
     }, (err, existingDoc) => {
         if (err) {
@@ -121,6 +126,9 @@ app.put('/funcionarios/:id', (req, res) => {
 
         if (existingDoc) {
             const erros = [];
+            if (existingDoc.nome === nome) {
+                erros.push('Já existe outro funcionário cadastrado com este nome');
+            }
             if (existingDoc.email === email) {
                 erros.push('Já existe outro funcionário cadastrado com este email');
             }
