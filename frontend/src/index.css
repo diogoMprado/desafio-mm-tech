@@ -1,14 +1,8 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f4f7f6;
-  color: #333;
-  padding: 20px;
+/* Import fonte Inter para melhor tipografia */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Reset básico - MUI CssBaseline cuida do resto */
+* {
+  box-sizing: border-box;
 }
 
-h1 {
-  text-align: center;
-  color: #050707;
-}
