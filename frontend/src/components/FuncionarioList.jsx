@@ -44,7 +44,6 @@ const FuncionarioList = ({onEdit, onUpdate}) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredFuncionarios.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Reset para página 1 quando buscar
     useEffect(() => {
         setCurrentPage(1);
     }, [searchTerm, itemsPerPage]);
@@ -136,23 +135,24 @@ const FuncionarioList = ({onEdit, onUpdate}) => {
                     </p>
                 ) : (
                     <>
-                        <table border="1" style={{width: '100%', borderCollapse: 'collapse' }}>
-                            <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                                <th>Ações</th>
+                        <div className="table-wrapper">
+                            <table border="1" style={{width: '100%', borderCollapse: 'collapse' }}>
+                                <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Ações</th>
                             </tr>
                             </thead>
                             <tbody>
                             {currentItems.map(f => (
                                 <tr key={f._id}>
-                                    <td>{f.nome}</td>
-                                    <td>{f.email}</td>
+                                    <td title={f.nome}>{f.nome}</td>
+                                    <td title={f.email}>{f.email}</td>
                                     <td>{f.telefone}</td>
                                     <td>
-                                        <div style={{display: 'flex', gap: '10px', justifyContent: 'center'}}>
+                                        <div style={{display: 'flex', gap: '6px', justifyContent: 'center', flexWrap: 'wrap'}}>
                                             <button className="btn-edit" onClick={() => onEdit(f)}>
                                                 ✏️ Editar
                                             </button>
@@ -162,9 +162,10 @@ const FuncionarioList = ({onEdit, onUpdate}) => {
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
-                            </tbody>
-                        </table>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
 
                         {/* Paginação */}
                         <div className="pagination">

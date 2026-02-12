@@ -1,14 +1,28 @@
 import React, {useState} from 'react';
 import FuncionarioList from './components/FuncionarioList';
 import FuncionarioForm from './components/FuncionarioForm';
+import {buscarFuncionario} from './services/api';
 import './App.css';
 
 function App() {
     const [funcionarioEmEdicao, setFuncionarioEmEdicao] = useState(null);
     const [update, setUpdate] = useState(0);
+    const [isLoadingEdit, setIsLoadingEdit] = useState(false);
 
     const handleEdit = (funcionario) => {
-        setFuncionarioEmEdicao(funcionario);
+        setIsLoadingEdit(true);
+        buscarFuncionario(funcionario._id)
+            .then((response) => {
+                setFuncionarioEmEdicao(response.data);
+            })
+            .catch((error) => {
+                console.error('Erro ao buscar funcionário:', error);
+                // Fallback: usar dados da lista se a busca falhar
+                setFuncionarioEmEdicao(funcionario);
+            })
+            .finally(() => {
+                setIsLoadingEdit(false);
+            });
     };
 
     const handleSave = () => {
@@ -28,10 +42,16 @@ function App() {
             </div>
             <div className="container">
                 <div className="form-container">
-                    <FuncionarioForm
-                        funcionario={funcionarioEmEdicao}
-                        onSave={handleSave}
-                    />
+                    {isLoadingEdit ? (
+                        <div style={{textAlign: 'center', padding: '40px'}}>
+                            <p>Carregando dados do funcionário...</p>
+                        </div>
+                    ) : (
+                        <FuncionarioForm
+                            funcionario={funcionarioEmEdicao}
+                            onSave={handleSave}
+                        />
+                    )}
                 </div>
                 <div className="list-container">
                     <FuncionarioList
@@ -41,8 +61,7 @@ function App() {
                 </div>
             </div>
         </div>
-    )
-        ;
+    );
 }
 
 export default App;

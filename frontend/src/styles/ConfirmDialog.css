@@ -18,7 +18,7 @@
     padding: 30px;
     max-width: 450px;
     width: 90%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(76, 82, 151, 0.3);
     animation: slideUp 0.3s ease-out;
 }
 
@@ -63,12 +63,12 @@
 }
 
 .btn-confirm {
-    background-color: #E63946;
+    background: linear-gradient(135deg, #4C5297 0%, #673486 100%);
     color: white;
 }
 
 .btn-confirm:hover {
-    background-color: #C1121F;
+    background: linear-gradient(135deg, #1E7FAC 0%, #4C5297 100%);
 }
 
 @keyframes fadeIn {
@@ -90,4 +90,6 @@
         opacity: 1;
     }
 }
+
+
 
