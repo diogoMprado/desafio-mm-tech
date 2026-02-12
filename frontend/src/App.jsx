@@ -35,6 +35,8 @@ function App() {
 
     useEffect(() => {
         localStorage.setItem(THEME_STORAGE_KEY, mode);
+        document.body.classList.remove('light', 'dark');
+        document.body.classList.add(mode);
     }, [mode]);
 
     const toggleTheme = () => {

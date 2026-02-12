@@ -66,7 +66,7 @@ app.post('/funcionarios', (req, res) => {
             return res.status(400).json({erros});
         }
 
-        // Se não existe duplicação, inserir o funcionário
+        // Se não existe duplicação, insere o funcionário
         const funcionario = {nome, email, telefone};
         db.insert(funcionario, (err, newDoc) => {
             if (err) {
@@ -112,7 +112,7 @@ app.put('/funcionarios/:id', (req, res) => {
         return res.status(400).json({erros: validacao.erros});
     }
 
-    // Verificar se já existe outro funcionário com o mesmo nome, email ou telefone
+    // Verifica se já existe outro funcionário com o mesmo nome, email ou telefone
     db.findOne({
         $and: [
             {_id: {$ne: id}}, // Diferente do ID atual
@@ -139,7 +139,7 @@ app.put('/funcionarios/:id', (req, res) => {
             return res.status(400).json({erros});
         }
 
-        // Se não existe duplicação, atualizar o funcionário
+        // Se não existe duplicação, atualiza o cadastro do funcionário
         db.update({_id: id}, {$set: {nome, email, telefone}}, {}, (err, numReplaced) => {
             if (err) {
                 return res.status(500).send('Erro ao atualizar funcionário');
