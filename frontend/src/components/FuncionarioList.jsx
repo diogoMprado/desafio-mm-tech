@@ -87,9 +87,25 @@ const FuncionarioList = ({ onEdit, onUpdate }) => {
         if (funcionarioToDelete) {
             deletarFuncionario(funcionarioToDelete)
                 .then(() => {
-                    setFuncionarios((prev) =>
-                        prev.filter((f) => f._id !== funcionarioToDelete)
-                    );
+                    const updatedList = funcionarios.filter((f) => f._id !== funcionarioToDelete);
+                    setFuncionarios(updatedList);
+
+                    // Ajustar página se necessário após exclusão
+                    const filteredAfterDelete = updatedList.filter((f) => {
+                        const searchLower = searchTerm.toLowerCase();
+                        return (
+                            f.nome.toLowerCase().includes(searchLower) ||
+                            f.email.toLowerCase().includes(searchLower) ||
+                            f.telefone.includes(searchTerm)
+                        );
+                    });
+
+                    // Se a página atual ficou vazia e não é a primeira página, voltar uma página
+                    const maxPage = Math.max(0, Math.ceil(filteredAfterDelete.length / rowsPerPage) - 1);
+                    if (page > maxPage) {
+                        setPage(maxPage);
+                    }
+
                     setToast({
                         message: 'Funcionário excluído com sucesso!',
                         severity: 'success',
@@ -184,6 +200,7 @@ const FuncionarioList = ({ onEdit, onUpdate }) => {
                                     <Search color="action" />
                                 </InputAdornment>
                             ),
+                            sx: { backgroundColor: 'transparent' },
                         },
                     }}
                 />

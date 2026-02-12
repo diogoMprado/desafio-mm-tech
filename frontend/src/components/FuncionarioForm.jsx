@@ -21,6 +21,7 @@ import {
     Cancel,
 } from '@mui/icons-material';
 import { cadastrarFuncionario, atualizarFuncionario } from '../services/api';
+import { gradientBackground } from '../theme';
 import Toast from './Toast';
 
 const FuncionarioForm = ({ funcionario, onSave }) => {
@@ -75,6 +76,13 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
                     message: `Funcionário ${isEditing ? 'atualizado' : 'cadastrado'} com sucesso!`,
                     severity: 'success',
                 });
+
+                // Limpar formulário após cadastro
+                if (!isEditing) {
+                    setFormData({ nome: '', email: '', telefone: '' });
+                    setErrors([]);
+                }
+
                 onSave();
             })
             .catch((error) => {
@@ -149,7 +157,7 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
                     </Alert>
                 </Collapse>
 
-                <Box component="form" onSubmit={handleSubmit}>
+                <Box component="form" onSubmit={handleSubmit} autoComplete="off">
                     <Stack spacing={3}>
                         <TextField
                             fullWidth
@@ -159,6 +167,12 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
                             value={formData.nome}
                             onChange={handleChange}
                             required
+                            autoComplete="new-password"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'transparent !important',
+                                },
+                            }}
                             slotProps={{
                                 input: {
                                     startAdornment: (
@@ -174,11 +188,17 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
                             fullWidth
                             label="E-mail"
                             name="email"
-                            type="email"
+                            type="text"
                             placeholder="funcionario@exemplo.com"
                             value={formData.email}
                             onChange={handleChange}
                             required
+                            autoComplete="new-password"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'transparent !important',
+                                },
+                            }}
                             slotProps={{
                                 input: {
                                     startAdornment: (
@@ -199,6 +219,12 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
                             value={formData.telefone}
                             onChange={handleChange}
                             required
+                            autoComplete="new-password"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'transparent !important',
+                                },
+                            }}
                             slotProps={{
                                 input: {
                                     startAdornment: (
@@ -219,6 +245,13 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
                                 startIcon={<Save />}
                                 fullWidth
                                 size="large"
+                                sx={{
+                                    background: gradientBackground,
+                                    '&:hover': {
+                                        background: gradientBackground,
+                                        filter: 'brightness(1.1)',
+                                    },
+                                }}
                             >
                                 {isEditing ? 'Atualizar' : 'Salvar'}
                             </LoadingButton>

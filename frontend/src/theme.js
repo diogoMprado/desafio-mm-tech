@@ -16,7 +16,7 @@ const getDesignTokens = (mode) => ({
       contrastText: '#ffffff',
     },
     background: {
-      default: mode === 'light' ? '#f5f7fa' : '#121212',
+      default: mode === 'light' ? '#d3d4d8' : '#514f4f',
       paper: mode === 'light' ? '#ffffff' : '#1e1e1e',
     },
     text: {
@@ -120,14 +120,63 @@ const getDesignTokens = (mode) => ({
         root: {
           '& .MuiOutlinedInput-root': {
             borderRadius: 8,
-            '&:hover .MuiOutlinedInput-notchedOutline': {
+            backgroundColor: 'transparent',
+            '& fieldset': {
+              borderColor: mode === 'light' ? '#e5e7eb' : '#444444',
+            },
+            '&:hover fieldset': {
               borderColor: '#1E7FAC',
             },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            '&.Mui-focused fieldset': {
               borderColor: '#1E7FAC',
               borderWidth: 2,
             },
           },
+          '& .MuiInputLabel-root': {
+            color: mode === 'light' ? '#6b7280' : '#b0b0b0',
+            backgroundColor: mode === 'light' ? '#ffffff' : '#1e1e1e',
+            padding: '0 4px',
+            '&.Mui-focused': {
+              color: '#1E7FAC',
+            },
+          },
+          '& .MuiOutlinedInput-input': {
+            color: mode === 'light' ? '#1a1a2e' : '#ffffff',
+            // Remover background do autofill do navegador
+            '&:-webkit-autofill': {
+              WebkitBoxShadow: mode === 'light'
+                ? '0 0 0 100px #ffffff inset'
+                : '0 0 0 100px #1e1e1e inset',
+              WebkitTextFillColor: mode === 'light' ? '#1a1a2e' : '#ffffff',
+              caretColor: mode === 'light' ? '#1a1a2e' : '#ffffff',
+            },
+            '&:-webkit-autofill:hover': {
+              WebkitBoxShadow: mode === 'light'
+                ? '0 0 0 100px #ffffff inset'
+                : '0 0 0 100px #1e1e1e inset',
+            },
+            '&:-webkit-autofill:focus': {
+              WebkitBoxShadow: mode === 'light'
+                ? '0 0 0 100px #ffffff inset'
+                : '0 0 0 100px #1e1e1e inset',
+            },
+          },
+          '& .MuiInputAdornment-root': {
+            color: mode === 'light' ? '#6b7280' : '#b0b0b0',
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent',
+          '&.Mui-focused': {
+            backgroundColor: 'transparent',
+          },
+        },
+        notchedOutline: {
+          borderColor: mode === 'light' ? '#e5e7eb' : '#444444',
         },
       },
     },
