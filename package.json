@@ -1,0 +1,18 @@
+{
+  "name": "desafio-mm-tech",
+  "version": "1.0.0",
+  "description": "Sistema de Cadastro de Funcionários - Desafio Técnico MM Tech",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n server,frontend -c blue,green \"npm run dev --prefix server\" \"npm run dev --prefix frontend\"",
+    "install:all": "cd server && npm install && cd ../frontend && npm install",
+    "build": "npm run build --prefix frontend",
+    "start": "npm run start --prefix server"
+  },
+  "keywords": ["crud", "react", "express", "nedb"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

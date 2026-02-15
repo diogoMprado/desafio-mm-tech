@@ -22,6 +22,7 @@ import {
 } from '@mui/icons-material';
 import { cadastrarFuncionario, atualizarFuncionario } from '../services/api';
 import { gradientBackground } from '../theme';
+import { aplicarMascaraTelefone } from '../utils/formatters';
 import Toast from './Toast';
 
 const FuncionarioForm = ({ funcionario, onSave }) => {
@@ -37,17 +38,21 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
             setFormData({
                 nome: funcionario.nome,
                 email: funcionario.email,
-                telefone: funcionario.telefone,
+                telefone: aplicarMascaraTelefone(funcionario.telefone),
             });
         } else {
             setFormData({ nome: '', email: '', telefone: '' });
         }
         setErrors([]);
-    }, [funcionario]);
+    }, [funcionario?._id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        if (name === 'telefone') {
+            setFormData((prev) => ({ ...prev, telefone: aplicarMascaraTelefone(value) }));
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }));
+        }
     };
 
     const handleSubmit = (e) => {
@@ -109,9 +114,9 @@ const FuncionarioForm = ({ funcionario, onSave }) => {
             novosErros.push('Nome é obrigatório (mínimo 2 caracteres)');
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.(com|com\.br)$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
         if (!formData.email || !emailRegex.test(formData.email)) {
-            novosErros.push('Email inválido. Use o formato: exemplo@exemplo.com ou exemplo@exemplo.com.br');
+            novosErros.push('Email inválido. Use o formato: exemplo@dominio.com');
         }
 
         const telefoneNumerico = formData.telefone.replace(/\D/g, '');

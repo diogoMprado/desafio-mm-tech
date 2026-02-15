@@ -28,6 +28,7 @@ import {
     PersonOff,
 } from '@mui/icons-material';
 import { listarFuncionarios, deletarFuncionario } from '../services/api';
+import { formatarTelefone } from '../utils/formatters';
 import Toast from './Toast';
 import ConfirmDialog from './ConfirmDialog';
 
@@ -242,7 +243,7 @@ const FuncionarioList = ({ onEdit, onUpdate }) => {
                                             <TableRow key={f._id} hover>
                                                 <TableCell>{f.nome}</TableCell>
                                                 <TableCell>{f.email}</TableCell>
-                                                <TableCell>{f.telefone}</TableCell>
+                                                <TableCell>{formatarTelefone(f.telefone)}</TableCell>
                                                 <TableCell align="center">
                                                     <Stack
                                                         direction="row"

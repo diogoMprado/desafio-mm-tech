@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/* Forçar remoção do background de autofill do navegador */
+/* Webkit autofill override — precisa de !important para sobrescrever estilos do browser */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -23,43 +23,21 @@ select:-webkit-autofill:active {
   background-color: transparent !important;
 }
 
-/* Remover background dos inputs no MUI */
-.MuiOutlinedInput-root,
-.MuiOutlinedInput-input,
-.MuiInputBase-root,
-.MuiInputBase-input {
-  background-color: transparent !important;
-}
-
-/* Garantir que o texto do input seja visível */
-.MuiOutlinedInput-input,
-.MuiInputBase-input {
-  color: inherit !important;
-}
-
-/* Cor do texto no modo escuro */
+/* Garantir cores corretas nos inputs de acordo com o tema */
 body.dark .MuiOutlinedInput-input,
-body.dark .MuiInputBase-input {
+body.dark .MuiInputBase-input,
+body.dark .MuiTextField-root .MuiOutlinedInput-input,
+body.dark input.MuiOutlinedInput-input,
+body.dark input.MuiInputBase-input {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* Cor do texto no modo claro */
 body.light .MuiOutlinedInput-input,
-body.light .MuiInputBase-input {
+body.light .MuiInputBase-input,
+body.light .MuiTextField-root .MuiOutlinedInput-input,
+body.light input.MuiOutlinedInput-input,
+body.light input.MuiInputBase-input {
   color: #1a1a2e !important;
   -webkit-text-fill-color: #1a1a2e !important;
-}
-
-/* Placeholder mais visível */
-body.dark .MuiOutlinedInput-input::placeholder,
-body.dark .MuiInputBase-input::placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-}
-
-body.light .MuiOutlinedInput-input::placeholder,
-body.light .MuiInputBase-input::placeholder {
-  color: #6b7280 !important;
-  opacity: 1 !important;
 }
